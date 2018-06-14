@@ -1,5 +1,26 @@
-$(document).ready(loadRestaurants);
+$(document).ready(function(){
+    // Disable the upload button in form for file validation
+    $("#uploadButton").prop('disabled', true);
 
+    // Load the restaurant data from json file
+    loadRestaurants();
+
+    // File upload validation File name should match
+    $("#jsonFile").change(function(e) {
+        var filename = e.target.files[0].name;
+        if(filename != "restaurant_data.json")
+        {
+            $("#fileHelp").html('<font color="red">Invalid file chosen !<br>Please choose restaurant_data.json file</font>');
+        }
+        else
+        {
+            $("#uploadButton").prop('disabled', false);
+            $("#fileHelp").html('<font color="green">Please click on Upload to proceed !</font>');
+        }
+    });
+});
+
+// Reads json file and shows restaurant names
 function loadRestaurants()
 {
     $.getJSON("restaurant_data.json", function(result)
@@ -18,6 +39,7 @@ function loadRestaurants()
     });
 }
 
+// Inserts data to the modal (map, ratings etc.) based on mouseclick on restaurant name
 function showModal(id)
 {
     $.getJSON("restaurant_data.json", function(result)
@@ -31,7 +53,8 @@ function showModal(id)
                     <div class="modal-body myfont">\
                         <p>Rating: '+ result[id]['rating'] +'<span class="glyphicon">&#xe006;</span></p>\
                         <p><a href="' + id + '">Click here for more info</a></p>\
-                        <div id="mymap"></div>\
+                        <div id="mymap"></div><br>\
+                        <p>Top Review:<br>' + result[id]['reviews'][0] + '</p>\
                     </div>\
                     <div class="modal-footer">\
                         <p> Credits: <a href="https://www.zomato.com/">Zomato</a></p>\

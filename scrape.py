@@ -1,18 +1,29 @@
+from bs4 import BeautifulSoup as bs
 import json
 from selenium import webdriver
-from bs4 import BeautifulSoup as bs
+import sys
+
+# Number of pages to sc
+pages = 1
+if len(sys.argv) > 1:
+    pages = int(sys.argv[1])
 
 # Selenium browser to open the URL and get page source
 browser = webdriver.Chrome('./chromedriver')
 browser.implicitly_wait(30)
-browser.get('https://www.zomato.com/bangalore/restaurants')
-html_data = browser.page_source
+url_list = []
 
-# BeautifulSoup library to parse the HTML data
-soup = bs(html_data, 'html.parser')
+# Visit start pages and obtain restaurant URLS
+for page in range(1, pages + 1):
+    browser.get('https://www.zomato.com/bangalore/restaurants?page=' + str(page))
+    html_data = browser.page_source
 
-# Get list of all restaurant URLs from start page
-url_list = [a['href'] for a in soup.findAll('a', attrs={'class' : 'result-title hover_feedback zred bold ln24 fontsize0 '})]
+    # BeautifulSoup library to parse the HTML data
+    soup = bs(html_data, 'html.parser')
+
+    # Get list of all restaurant URLs from start page
+    url_list += [a['href'] for a in soup.findAll('a', attrs={'class' : 'result-title hover_feedback zred bold ln24 fontsize0 '})]
+
 restaurant_data = {}
 
 # Visit each URL and scrape required data using
