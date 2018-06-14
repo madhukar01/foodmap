@@ -1,0 +1,53 @@
+.food-icon {
+    border: 10px solid transparent;
+    margin-bottom: 25px;
+    height: 80%;
+    width: 80%;
+    opacity: 0.8;
+}
+
+body {
+    background-image: url("../images/background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+}
+
+div {
+    margin: 0;
+}
+
+.food-icon:hover {
+    border-color:red;
+    font-weight: bold;
+    opacity: 1;
+}
+
+#restaurant-details {
+    background: transparent;
+    margin: 0;
+}
+
+.thumbnail {
+    position: relative;
+}
+
+.caption {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    width: 100%;
+    font-family: "Verdana";
+    font-size: 25px;
+}
+
+.myfont {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#mymap {
+    height: 200px;
+    width:100%;
+}
